@@ -1,0 +1,12 @@
+# Makefile for client and sever
+
+all: 
+	g++ -c FILE.c -o FILE.o
+	g++ -c SOCKET.c -o SOCKET.o
+	g++ -O3 server.c -lopencv_core -lopencv_imgproc -lopencv_highgui  -lopencv_contrib  -I/usr/local/include/ -L/usr/local/lib SOCKET.o FILE.o  -o ./SERVER__/server
+	g++ -O3 client.c SOCKET.o FILE.o  -o ./CLIENT__/client
+
+clean: 
+	-rm SOCKET.o
+	-rm server
+	-rm client

@@ -1,0 +1,28 @@
+#include<stdio.h>
+#include<sys/time.h>
+
+int main(){
+  FILE *fp;
+  int c;
+
+  //time
+  struct timeval s,e;
+  
+
+  if((fp = fopen("sample.txt","r")) == NULL){
+    printf("file can`t open\n");    
+  }
+  
+  gettimeofday(&s,NULL);
+  //処理
+  while((c = fgetc(fp)) != EOF){
+    printf("%c",c);
+  }
+  
+  gettimeofday(&e,NULL);
+
+  //printf("time = %f\n", (e.tv_sec - s.tv_sec) + (e.tv_usec - s.tv_usec)  / 1000000.0);
+
+}
+  
+  

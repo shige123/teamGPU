@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "SOCKET.h"
+#include <unistd.h>
+
+
+#define BUFFER_SIZE 256
+#//define PROCESS_NUM 4
+
+int main(){
+  unsigned short port = 51000;
+  char buf[BUFFER_SIZE];
+
+  FILE* fp;
+  char s_fname[15] = "sample.txt";
+  char r_fname[10] = "kiyoshi.txt";
+  int DstSocket;
+  char *ans;
+  
+  DstSocket
+  

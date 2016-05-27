@@ -1,0 +1,69 @@
+//クライアント
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "SOCKET.h"
+#include <unistd.h>
+#include <sys/time.h>
+
+#define BUFFER_SIZE 256
+#define PHOTO_NUM 50
+#define PROCCESS_NUM 4
+
+int main(int argc, char *argv[]){
+  /* IP アドレス、ポート番号、ソケット */
+  // char destination[80];
+  struct timeval s,e;
+
+  unsigned short port;
+  if(argc == 2){
+    port = atoi(argv[1]);
+  }else{
+    port = 51000;
+  }
+  /* 各種パラメータ */
+  int DstSocket;
+  int i;
+  int p_count = 0;
+  pid_t p_id;
+
+  gettimeofday(&s,NULL);
+ 
+  while( p_count < PROCCESS_NUM - 1 ){
+  
+    if((p_id = fork()) != 0){
+       p_count++;
+      continue;
+    }
+    
+    DstSocket = ClientSetConect( port + (5 * p_count) , JOKER );
+    
+    for(i = (PHOTO_NUM / PROCCESS_NUM) * p_count; i < (PHOTO_NUM / PROCCESS_NUM) * ( p_count + 1 ); i++){  
+      SendData(DstSocket,i,ORIGIN);
+      RecvData(DstSocket,i,RESULT); 
+    }
+    fprintf(stderr,"child close %d \n",p_count);
+    close(DstSocket);
+    return 0;
+  }
+
+  
+
+  DstSocket = ClientSetConect(port + ( 5 * (PROCCESS_NUM - 1)), JOKER);
+  for(i = (PHOTO_NUM / PROCCESS_NUM) * (PROCCESS_NUM - 1) ; i < PHOTO_NUM ;i++){
+    SendData(DstSocket, i, ORIGIN);
+    RecvData(DstSocket, i, RESULT);
+  }
+
+  //wait(NULL);
+
+  close(DstSocket);
+
+  gettimeofday(&e,NULL);
+
+  printf("time    = %f\n", (e.tv_sec - s.tv_sec) + (e.tv_usec - s.tv_usec ) / 100000.0);
+
+  printf("connection closed\n");
+  return 0;  
+}

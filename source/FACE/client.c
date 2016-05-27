@@ -29,17 +29,17 @@ int main(int argc, char *argv[]){
   pid_t p_id;
 
   //gettimeofday(&s,NULL);
- 
-  while( p_count < PROCCESS_NUM - 1 ){
+  for( p_count = 0; p_count < PROCCESS_NUM - 1; p_count++ ){
+  
   
     if((p_id = fork()) != 0){
-       p_count++;
+      //p_count++;
       continue;
     }
-
+    
     //sleep(0.1);
     
-    p_count = getpid() % PROCCESS_NUM;
+    //p_count = getpid() % PROCCESS_NUM;
 
     DstSocket = ClientSetConect( port + (5 * p_count) , JOKER );
     
@@ -64,9 +64,9 @@ int main(int argc, char *argv[]){
 
   close(DstSocket);
 
-  gettimeofday(&e,NULL);
+  //gettimeofday(&e,NULL);
 
-  printf("time    = %f\n", (e.tv_sec - s.tv_sec) + (e.tv_usec - s.tv_usec ) / 100000.0);
+  //printf("time    = %f\n", (e.tv_sec - s.tv_sec) + (e.tv_usec - s.tv_usec ) / 100000.0);
 
   printf("connection closed\n");
   return 0;  

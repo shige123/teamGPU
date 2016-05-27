@@ -13,7 +13,7 @@ int main(){
   int DstSocket;
   char buf[BUFFER_SIZE];
 
-  char r_fname[15] = "Text.txt";
+  char r_fname[15] = "zundoko.txt";
   //  char s_fname[10] = "ans.txt";
   char ans[30];
   FILE *w_fp, *r_fp;

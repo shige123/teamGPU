@@ -36,14 +36,13 @@ int main(int argc, char *argv[]){
   pid_t p_id;
   char infname[11], outfname[12];
 
- while( p_count < PROCCESS_NUM - 1 ){
+  for( p_count = 0; p_count < PROCCESS_NUM - 1; p_count++ ){
     
    if((p_id = fork()) != 0){
-     //p_count++;
       continue;
   }
    
-   p_count = getpid() % PROCCESS_NUM;
+   //p_count = getpid() % PROCCESS_NUM;
 
    //sleep(0.1);
 
